@@ -1,4 +1,4 @@
-var BASE_URL = "http://localhost:8080/mvc/";
+var BASE_URL = "http://localhost:8080/mvc";
 
 /*
  * Prosedur mengirim data melalui bahasa AJAX
@@ -34,5 +34,5 @@ function send(data, target, callback_f) {
 	xmlhttp.send(data);
 }
 function sendJSONType(json_object, callback_f) {
-	send("data=" + JSON.stringify(json_object), BASE_URL + "proses/json/", callback_f);
+	send("data=" + JSON.stringify(json_object), BASE_URL + "/proses/json/", callback_f);
 }

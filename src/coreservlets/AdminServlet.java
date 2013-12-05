@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,18 +19,16 @@ import javax.servlet.http.HttpSession;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
- * Servlet implementation class BarangServlet
+ * Servlet implementation class HomeServlet
  */
-
-//Barang, parameter. id = barang_id to be shown
-@WebServlet("/barang")
-public class BarangServlet extends HttpServlet {
+@WebServlet("/admin")
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BarangServlet() {
+    public AdminServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,13 +43,15 @@ public class BarangServlet extends HttpServlet {
 	    	response.setContentType("text/html");
 			// Get a output writer to write the response message into the network socket
 			PrintWriter out = response.getWriter();
-			//Connection conn = null;
-			//Statement stmt = null;
+			Connection conn = null;
+			Statement stmt = null;
 			try {
+				conn = Process.getConnection();
+				stmt = conn.createStatement();
+								
 				
 		    	
 		    	// Print an HTML page as the output of the query
-
 		    	out.println("<html><head>" +
 						"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">" +
 						"<title>Ruserba</title>" +
@@ -58,8 +59,9 @@ public class BarangServlet extends HttpServlet {
 						"<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/home.css\" type=\"text/css\" /> " +
 						"<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/loginpopup.css\" type=\"text/css\" />" +
 						"<script src=\"" + request.getContextPath() + "/ajax_generic.js\"></script>	" +
-						
 						"</head><body>");
+		    	
+		    	
 		    	
 		    	
 		    	//HEADER
@@ -96,31 +98,80 @@ public class BarangServlet extends HttpServlet {
 		    	
 		    	//ARTICLE
 		    	out.println("<article class=\"container\">");
-		    	int id = Integer.parseInt(request.getParameter("id"));
-		    	ResultSet barang = Process.showBarang(id);
-		    	barang.next();
-				out.println("<h1>Detail Barang</h1>");
-				out.println("<form class=\"table barang\" method=\"post\" onSubmit=\"return addToShoppingChartBarang(this)\">");
-					out.println("<div class=\"row\">");
-						String path="";
-						if (barang.getString("image_url").equals("")){
-	    					path = request.getContextPath() + "/assets/image/default.big.png";
-	    				} else {
-	    					path = request.getContextPath() + "/" + barang.getString("image_url");
-	    				}
-						out.println("<span class=\"column\"><img src="+ path +" alt=\"Default\" width=\"250\" height=\"250\"></span>");
-						out.println("<span class=\"column\" style=\"vertical-align: top\">");
-							out.println("<h2>" + barang.getString("nama") + "</h2>");
-							out.println("<p>Rp." + barang.getDouble("harga")  + "</p>");
-							out.println("<p>" + barang.getString("deskripsi") + "</p>");
-							out.println("<p><textarea name=\"pesan\"></textarea></p>");
-							out.println("<p><span>Kuantitas: </span><input type=\"hidden\" name=\"id_barang\" value=\"" + barang.getInt("barang_id") + "\"><input type=\"text\" name=\"qty\" onKeyUp=\"validateQtyBarang(this)\"> <input type=\"submit\" value=\"+\" disabled=\"disabled\"></p>");
-						out.println("</span>");
-					out.println("</div>");
-				out.println("</form>");
+		    	out.println("<div class=\"box_kategori\">");
+				 
 		    	
+		    	String sqlStr = "select nama, image_url, deskripsi from barang_data";
+				
+				String num_kategori_query = "SELECT COUNT(kategori_id) FROM barang_kategori";
+		    	ResultSet num_kategori = stmt.executeQuery(num_kategori_query);
+		    	num_kategori.next();
+		    	int kategori = num_kategori.getInt(1); //get count of category
+				
 		    	
+		    	int count = 0;
+		    	String nama_kategori_query;
+		    	ResultSet nama_kategori_tabel;
+		    	Statement nama_kategori_stmt = conn.createStatement();
 		    	
+		    	String num_barang_query;
+		    	ResultSet num_barang_tabel;
+		    	Statement num_barang_stmt = conn.createStatement();
+		    	
+		    	ArrayList<String> nama;
+		    	ArrayList<String> image_url;
+		    	ArrayList<Double> harga;
+		    	ArrayList<Integer> id;
+		    	
+		    	for (int i = 1; i <= kategori; i++){
+		    		nama_kategori_query = "SELECT kategori_nama FROM barang_kategori WHERE kategori_id =" + i + ";";
+		    		nama_kategori_tabel = nama_kategori_stmt.executeQuery(nama_kategori_query);
+		    		nama_kategori_tabel.next();
+		    		
+		    		int numItem = 3;
+		    		int productId = 0;
+		    		
+		    		num_barang_query = "select distinct barang_data.barang_id, nama, image_url, harga from barang_kategori join barang_data where barang_data.kategori_id = "+i+";";
+		    	    num_barang_tabel = num_barang_stmt.executeQuery(num_barang_query);
+		    	    while (num_barang_tabel.next()){
+		    	    	count++;
+		    	    }
+		    	    num_barang_tabel.beforeFirst();
+		    	    if (count > 0){
+		    	    	out.println("<div class=\"box_nama\"><h2>" + nama_kategori_tabel.getString("kategori_nama") + "</h2></div>");
+		    	    	
+		    	    	int nama_size = 0;
+		    	    	nama = new ArrayList<String>();
+		    	    	image_url = new ArrayList<String>();
+		    	    	harga = new ArrayList<Double>();
+		    	    	id = new ArrayList<Integer>();
+		    			while(num_barang_tabel.next()) {
+		    				nama.add(num_barang_tabel.getString("nama"));
+		    				image_url.add(num_barang_tabel.getString("image_url"));
+		    				harga.add(num_barang_tabel.getDouble("harga"));
+		    				id.add(num_barang_tabel.getInt("barang_id"));
+		    				nama_size++;
+		    			}
+		    			
+		    			for (int j = 1; j <= id.size(); j++) {
+		    				//TODO up the link for each picture
+		    				out.println("<a class=\"box_barang\" href=\"barang?id=" + id.get(j-1) + "\">");
+		    				String path="";
+		    				if (image_url.get(j-1).equals("")){
+		    					path = request.getContextPath() + "/assets/image/default.png";
+		    				} else {
+		    					path = request.getContextPath() + "/" + image_url.get(j-1);
+		    				}
+		    				out.println("<img class=\"gambar_barang\" src=\"" + path + "\" alt=\"Default\" height=\"100\" width=\"100\"/>");
+		    				out.println("<h3>"+ nama.get(j-1) +"</h3>");
+		    				out.print("<span class=\"harga\">Rp. " + harga.get(j-1) + "</span>");
+		    				out.println("</a>");
+		    				if (j >= nama_size) break;
+		    				
+		    			}
+		    	    }
+		    	    
+		    	}
 		    	out.println("</article>");
 				//END OF ARTICLE
 		    	
@@ -130,20 +181,24 @@ public class BarangServlet extends HttpServlet {
 							"</footer>" +
 							"<script src=\"" + request.getContextPath() + "/use.js\"></script>	" +
 							"<script src=\"" + request.getContextPath() + "/validator.js\"></script>"
-		    			);
+							);
 				//END OF FOOTER
 		    	
 		    	
 		    	out.println("</body></html>");
-			
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			} finally {
 				out.close(); // Close the output writer
-				
+				try {
+					// Step 5: Close the resources
+					if (stmt != null) stmt.close();
+					//if (conn != null) conn.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
 			}
 	
-	    	
 	    }
 	}
 

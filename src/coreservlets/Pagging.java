@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -287,13 +289,85 @@ public class Pagging extends HttpServlet {
 			 }
 			 jsonObject.writeTo(out);
 		 }
+		 else if (todo.equals("daftarCreditCard")){
+			 jsonObject = jsonObject.get("data").asObject();
+			 int userId = jsonObject.get("user_id").asInt();
+			 String nomorKartu = jsonObject.get("nomor_kartu").asString();
+			 String namaPemilik = jsonObject.get("nama_pemilik").asString();
+			 String strbulan = jsonObject.get("bulan").asString();
+			 int bulan = 1;
+			 if (strbulan.equals("Januari"))
+				 bulan = 1;
+			 else if (strbulan.equals("Februari"))
+				 bulan = 2;
+			 else if (strbulan.equals("Maret"))
+				 bulan = 3;
+			 else if (strbulan.equals("April"))
+				 bulan = 4;
+			 else if (strbulan.equals("Mei"))
+				 bulan = 5;
+			 else if (strbulan.equals("Juni"))
+				 bulan = 6;
+			 else if (strbulan.equals("Juli"))
+				 bulan = 7;
+			 else if (strbulan.equals("Agustus"))
+				 bulan = 8;
+			 else if (strbulan.equals("September"))
+				 bulan = 9;
+			 else if (strbulan.equals("Oktober"))
+				 bulan = 10;
+			 else if (strbulan.equals("November"))
+				 bulan = 11;
+			 else if (strbulan.equals("Desember"))
+				 bulan = 12;
+			 String strTahun = jsonObject.get("tahun").asString();
+			 int tahun = Integer.parseInt(strTahun);
+			 Calendar now = Calendar.getInstance();
+			 Calendar exp = Calendar.getInstance();
+			 exp.set(tahun, bulan, 1);
+			 if (exp.after(now)){
+				 MySQLAccess db = new MySQLAccess();
+				 String date = tahun + "-" + bulan + "-01";
+				 db.registerCreditCard(userId,nomorKartu,namaPemilik,date);
+				 jsonObject = new JsonObject().add("status","success");
+				 jsonObject.writeTo(out);
+			 }
+			 else {
+				 jsonObject = new JsonObject().add("status","failed").add("data","Date is not valid.");
+				 jsonObject.writeTo(out);
+			 }
+		 }
 		 else if (todo.equals("getIdentity")){
 			 JsonArray jsonArray = jsonObject.get("data").asArray();
 			 jsonObject = jsonArray.get(0).asObject();
 			 int user_id = jsonObject.get("user_id").asInt();
 			 MySQLAccess db = new MySQLAccess();
 			 User user = db.getUser(user_id);
-			 jsonObject = new JsonObject().add("status","success").add("data",new JsonArray().add(new JsonObject().add("user_id", user.userid).add("alamat", user.alamat).add("provinsi", user.provinsi).add("kabupaten", user.kabupaten).add("kodepos", user.kodepos).add("user_phone", user.handphone)));
+			 if (user != null){
+				 jsonObject = new JsonObject().add("status","success").add("data",new JsonObject().add("user_id", user.userid).add("alamat", user.alamat).add("provinsi", user.provinsi).add("kabupaten", user.kabupaten).add("kodepos", user.kodepos).add("user_phone", user.handphone));
+				 jsonObject.writeTo(out);
+			 }
+			 else {
+				 jsonObject = new JsonObject().add("status","failed").add("data","Data tidak ditemukan");
+				 jsonObject.writeTo(out);
+			 }
+		 }
+		 else if (todo.equals("changeIdentity")){
+			 JsonArray jsonArray = jsonObject.get("data").asArray();
+			 jsonObject = jsonArray.get(0).asObject();
+			 int user_id = jsonObject.get("user_id").asInt();
+			 String kata_sandi = jsonObject.get("kata_sandi").asString();
+			 String alamat = jsonObject.get("alamat").asString();
+			 String provinsi = jsonObject.get("provinsi").asString();
+			 String kabupaten = jsonObject.get("kabupaten").asString();
+			 String kodepos = jsonObject.get("kodepos").asString();
+			 String no_hp = jsonObject.get("no_hp").asString();
+			 MySQLAccess db = new MySQLAccess();
+			 db.changeIdentity(user_id,alamat,provinsi,kabupaten,kodepos,no_hp);
+			 if (kata_sandi != ""){
+				 db.changePassword(user_id, kata_sandi);
+			 }
+			 jsonObject = new JsonObject().add("status","success").add("data",new JsonObject().add("user_id", user_id).add("alamat", alamat).add("provinsi", provinsi).add("kabupaten", kabupaten).add("kodepos", kodepos).add("user_phone", no_hp));
 			 jsonObject.writeTo(out);
 		 }
 		 else if (todo.equals("login")){
@@ -307,7 +381,7 @@ public class Pagging extends HttpServlet {
 				 String fullname = user.fullname;
 				 String email = user.email;
 				 int userid = user.userid;
-				 jsonObject = new JsonObject().add("status","success").add("data", new JsonArray().add(new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid)));
+				 jsonObject = new JsonObject().add("status","success").add("data", new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid));
 				 jsonObject.writeTo(out);
 			 }
 			 else {

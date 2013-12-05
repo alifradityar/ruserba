@@ -172,7 +172,7 @@ public int daftarUser(String username, String password, String fullname,
 	    int id = resultSet.getInt("num");
 	    String str = "INSERT INTO pelanggan_id VALUES (" + id + ", '" + fullname + "', '" + email + "');";
 	    int res = statement.executeUpdate(str);
-	    str = "INSERT INTO __user_login VALUES (" + id + ", '" + username + "', '" + password + "', '" + "ab" + "');";
+	    str = "INSERT INTO __user_login VALUES (" + id + ", '" + username + "', '" + password + "', '" + "u" + "');";
 	    res = statement.executeUpdate(str);
 	    return id;
 	} catch (Exception e){
@@ -191,8 +191,9 @@ public User getUser(int user_id) {
 	    statement = connect.createStatement();
 	    // Result set get the result of the SQL query
 	    resultSet = statement
-	        .executeQuery("SELECT * FROM __user_login natural join pelanggan_id natural join pelanggan_addr WHERE user_id =" + user_id + ";");
+		        .executeQuery("SELECT * FROM __user_login natural join pelanggan_id WHERE user_id = " + user_id + " ;");
 	    boolean valid = false;
+	    
 	    resultSet.next();
     	int userid = resultSet.getInt("user_id");
     	String uname = resultSet.getString("nama_pengguna");
@@ -200,11 +201,24 @@ public User getUser(int user_id) {
     	String email = resultSet.getString("email");
     	String fullname = resultSet.getString("nama_lengkap");
     	User user = new User(userid,uname,pass,email,fullname);
+    	try {
+    		resultSet = statement
+    		        .executeQuery("SELECT * FROM pelanggan_addr WHERE user_id = " + userid + " ;");
+    		 resultSet.next();
+	    	user.provinsi = resultSet.getString("provinsi");
+	    	user.alamat = resultSet.getString("jalan");
+	    	user.kabupaten = resultSet.getString("kabupaten");
+	    	user.kodepos = resultSet.getString("kodepos");
+	    	user.handphone = resultSet.getString("user_phone");
+    	}
+    	catch (Exception e){
+    		
+    	}
 	    return user;
 	} catch (Exception e){
+		return null;
 	}
 	// TODO Auto-generated method stub
-	return null;
 }
 public boolean userExist(String username, String password) {
 	try {
@@ -217,33 +231,138 @@ public boolean userExist(String username, String password) {
 	    statement = connect.createStatement();
 	    // Result set get the result of the SQL query
 	    resultSet = statement
-	        .executeQuery("SELECT nama_pengguna, kata_sandi FROM __user_login;");
-	    boolean valid = false;
-	    while (resultSet.next()){
-	    	String uname = resultSet.getString("nama_pengguna");
-	    	String pass = resultSet.getString("kata_sandi");
-	    	if (uname == username ){
-	    		if (pass == password){
-	    			valid = true;
-	    		}
-	    		else {
-	    			valid = false;
-	    		}
-	    	}
-	    	else {
-	    		continue;
-	    	}
-	    }
-	    
-	    return valid;
+	        .executeQuery("SELECT kata_sandi FROM __user_login WHERE nama_pengguna = '" + username + "';");
+	    resultSet.next();
+	    String pass = resultSet.getString("kata_sandi");
+	    System.out.println(password + " " + pass);
+	    if (pass.equals(password))
+	    	return true;
+	    else
+	    	return false;
 	} catch (Exception e){
 		return false;
 	}
 }
+public void registerCreditCard(int userId, String nomorKartu,
+		String namaPemilik, String date) {
+	// TODO Auto-generated method stub
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    resultSet = statement
+		        .executeQuery("SELECT user_id FROM pelanggan_card WHERE user_id = " + userId + ";");
+	    resultSet.last();
+	    int nrow = resultSet.getRow();
+	    resultSet.beforeFirst();
+	    // Update
+	    if (nrow == 0){
+	    	String str = "INSERT INTO pelanggan_card VALUES (" + userId + ", '" + nomorKartu + "', '" + namaPemilik + "', '" + date + "');";
+	    	int res = statement.executeUpdate(str);
+	    }
+	    else {
+	    	String str = "UPDATE pelanggan_card SET card_number = '" + nomorKartu + "', card_name = '" + namaPemilik + "', card_expiry = '" + date + "' WHERE user_id = " + userId + ";";
+	    	int res = statement.executeUpdate(str);
+	    }
+	}
+	catch (Exception e){
+		
+	}
+}
 public User getUser(String username) {
 	// TODO Auto-generated method stub
-	
-	return null;
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    resultSet = statement
+	        .executeQuery("SELECT * FROM __user_login natural join pelanggan_id WHERE nama_pengguna = '" + username + "' ;");
+	    boolean valid = false;
+	    
+	    resultSet.next();
+    	int userid = resultSet.getInt("user_id");
+    	String uname = resultSet.getString("nama_pengguna");
+    	String pass = resultSet.getString("kata_sandi");
+    	String email = resultSet.getString("email");
+    	String fullname = resultSet.getString("nama_lengkap");
+    	User user = new User(userid,uname,pass,email,fullname);
+    	try {
+    		resultSet = statement
+    		        .executeQuery("SELECT * FROM pelanggan_addr WHERE user_id = " + userid + " ;");
+    		 resultSet.next();
+	    	user.provinsi = resultSet.getString("provinsi");
+	    	user.alamat = resultSet.getString("jalan");
+	    	user.kabupaten = resultSet.getString("kabupaten");
+	    	user.kodepos = resultSet.getString("kodepos");
+	    	user.handphone = resultSet.getString("user_phone");
+    	}
+    	catch (Exception e){
+    		
+    	}
+	    return user;
+	} catch (Exception e){
+		return null;
+	}
+}
+public void changeIdentity(int user_id, String alamat, String provinsi,
+		String kabupaten, String kodepos, String no_hp) {
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    resultSet = statement
+		        .executeQuery("SELECT user_id FROM pelanggan_addr WHERE user_id = " + user_id + ";");
+	    resultSet.last();
+	    int nrow = resultSet.getRow();
+	    resultSet.beforeFirst();
+	    // Update
+	    if (nrow == 0){
+	    	String str = "INSERT INTO pelanggan_addr VALUES (" + user_id + ", '" + alamat + "', '" + provinsi + "', '" + kabupaten  + "', '" + kodepos  + "', '" + no_hp + "');";
+	    	int res = statement.executeUpdate(str);
+	    	System.out.println(str);
+	    }
+	    else {
+	    	String str = "UPDATE pelanggan_addr SET jalan = '" + alamat + "', provinsi = '" + provinsi + "', kabupaten = '" +kabupaten + "', kodepos = '" +kodepos + "', user_phone = '" +no_hp + "' WHERE user_id = " + user_id + ";";
+	    	int res = statement.executeUpdate(str);
+	    }
+	}
+	catch (Exception e){
+		
+	}
+}
+public void changePassword(int user_id, String kata_sandi) {
+	// TODO Auto-generated method stub
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    String str = "UPDATE __user_login SET kata_sandi = '" + kata_sandi + "' WHERE user_id = " + user_id + ";";  
+	    int res = statement
+		        .executeUpdate(str);
+	}
+	catch (Exception e){
+		
+	}
 }
 
 } 

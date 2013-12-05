@@ -3,7 +3,7 @@ var loginformhtml = "<div id=\"loginbox\" class=\"overlay\"><form class=\"popup\
             "<p><input name=\"nama_pengguna\" type=\"text\" placeholder=\"Nama Pengguna\">" +
             "<input name=\"kata_sandi\" type=\"password\" placeholder=\"Kata Sandi\">" +
             "<input name=\"submit\" type=\"submit\" value=\"Login\"></p>" +
-            "<p>Atau <a href=\"" + BASE_URL + "pendaftaran\">Daftar baru</a></p>" +
+            "<p>Atau <a href=\"" + BASE_URL + "/pendaftaran\">Daftar baru</a></p>" +
             "<a class=\"close\" href=\"#close\"></a>" +
         "</form></div>";
 var identitas_pelanggan = null;
@@ -11,7 +11,7 @@ var identitas_pelanggan = null;
 function myOutput(data) {
 	var result = JSON.parse(data);
 	var form = document.getElementById("wbd_search");
-	window.location.href = BASE_URL + "cari?query=" + form.elements[0].value;
+	window.location.href = BASE_URL + "/cari?query=" + form.elements[0].value;
 }
 function testA() {
 	var form = document.getElementById("wbd_search");
@@ -36,7 +36,7 @@ function showSubmenuAfterAjax(data) {
 		submenu.appendChild(kontainer);
 		for(var i = 0; i < result.data.length; i++) {
 			var kategori = document.createElement("a");
-			kategori.href = BASE_URL + "kat/" + (i + 1) + "/";
+			kategori.href = BASE_URL + "/kat/" + (i + 1) + "/";
 			kategori.innerHTML = result.data[i];
 			kontainer.appendChild(kategori);
 		}
@@ -65,7 +65,7 @@ function submitPendaftaranAfter(data) {
 		if(saveToLocalStorage != null) {
 			saveToLocalStorage("userData", new_data);
 		}
-		window.location.href = BASE_URL + "pendaftaran/kartu";
+		window.location.href = BASE_URL + "/pendaftaran/kartu";
 	} else {
 		alert(result.data);
 	}
@@ -79,7 +79,7 @@ function submitlogin(field) {
 }
 function loginAfter(data) {
 	var result = JSON.parse(data);
-	alert("hoi");
+	//alert("hoi");
 	if(result.status == "success") {
 		// Add to local storage
 		var new_data = result.data;
@@ -91,7 +91,7 @@ function loginAfter(data) {
 
 		// Change element on login node
 		var changeelement = document.getElementById('login');
-			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "profil/\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
+			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "/profil/\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
 			changeelement.innerHTML += "<a class=\"menu_cell hyperlink\" onClick=\"logout()\" href=\"#\">Logout</a>";
 		// Remove loginbox node
 		var child = document.getElementById('loginbox');
@@ -99,6 +99,7 @@ function loginAfter(data) {
 
 		// set keranjang_belanja node to visible with inline-block display
 		document.getElementById('keranjang_belanja').style.display = "inline-block";
+		window.location.href = BASE_URL + "/home";
 	} else if(result.status == "failed") {
 		alert("Data username atau password salah.\nSilahkan coba lagi.");
 	}
@@ -118,12 +119,12 @@ function logout() {
 
 	// set keranjang_belanja node to invisible with none display
 	document.getElementById('keranjang_belanja').style.display = "none";
-	window.location.href = BASE_URL;
+	window.location.href = BASE_URL + "/home";
 }
 function getMoreIdentity() {
 	if(true) {
 		var bucket = {"todo":"getIdentity", "data":[
-				{"user_id":1}
+				{"user_id":getItemLocalStorage("userData").user_id}
 			]};
 		sendJSONType(bucket, getMoreIdentityAfter);
 	} else {
@@ -347,7 +348,7 @@ if(typeof(Storage) !== "undefined") {
 			var child = document.getElementById('loginbox');
 			if(child != null) child.parentNode.removeChild(child);
 			var changeelement = document.getElementById('login');
-			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "profil/\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
+			changeelement.innerHTML = "<a class=\"menu_cell hyperlink\" href=\"" + BASE_URL + "/profil\">Welcome, " + getItemLocalStorage("userData").nama_lengkap + "</a>";
 			changeelement.innerHTML += "<a class=\"menu_cell hyperlink\" onClick=\"logout()\" href=\"#\">Logout</a>";
 
 			// set node keranjang_belanja to visible with inline-block display

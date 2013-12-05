@@ -79,11 +79,11 @@ public class SearchServlet extends HttpServlet {
 		    	out.println("<img class=\"background\" id='kat5' src=\"" + request.getContextPath() + "/img_style/kat5.gif\" alt=\"Kategori 1\"/>");
 		    	out.println("</div>");
 		    	out.println("<div class=\"kategori_group\">");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
 		    	out.println("</div>");
 		    	out.println("</header>");
 				//END OF HEADER
@@ -160,7 +160,7 @@ public class SearchServlet extends HttpServlet {
 							}
 							out.println("<span class=\"column\"><img src=\"" + path + "\" alt=\"Default\" width=\"100\" height=\"100\"></span>");
 							out.println("<span class=\"column\" style=\"vertical-align: top\">");
-							out.println("<h3><a href=\""+ request.getContextPath() +"/barang/?id=" + barang.getInt("barang_id") + "\"> " + barang.getString("nama") + "</a></h3>");
+							out.println("<h3><a href=\""+ request.getContextPath() +"/barang?id=" + barang.getInt("barang_id") + "\"> " + barang.getString("nama") + "</a></h3>");
 							out.println("<p>Rp." + barang.getDouble("harga") +"<br>");
 							out.println(barang.getString("deskripsi") +"<br>");
 							out.println("<form onSubmit=\"return addToShoppingChart(this)\"><span>Kuantitas: </span><input type=\"hidden\" name=\"id_barang\" value=\"" + barang.getInt("barang_id") +"\"><input type=\"text\" name=\"qty\" onKeyUp=\"validateQtyBarang(this)\"> <input type=\"submit\" value=\"+\" disabled=\"disabled\"></form></p>");

@@ -22,7 +22,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  */
 
 //Kategori, parameter, kat = kategori_id, page = page number, by = sort by, sort = ascor desc
-@WebServlet("/kategori/")
+@WebServlet("/kategori")
 public class KategoriServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -68,6 +68,7 @@ public class KategoriServlet extends HttpServlet {
 		    	out.println("<input type=\"text\" name=\"search_input\" placeholder=\"Cari disini\">");
 		    	out.println("<input type=\"submit\" name=\"submit\" value=\"Cari\">");
 		    	out.println("</form>");
+		    	out.println("<a id=\"keranjang_belanja\" class=\"menu_cell hyperlink\" href=\"keranjang/\">Keranjang Belanja <span id=\"total_keranjang\"></span></a>");
 		    	out.println("</div>");
 		    	out.println("</nav>");
 		    	out.println("<div class=\"container\">");
@@ -81,11 +82,11 @@ public class KategoriServlet extends HttpServlet {
 		    	out.println("<img class=\"background\" id='kat5' src=\"" + request.getContextPath() + "/img_style/kat5.gif\" alt=\"Kategori 1\"/>");
 		    	out.println("</div>");
 		    	out.println("<div class=\"kategori_group\">");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
 		    	out.println("</div>");
 		    	out.println("</header>");
 				//END OF HEADER
@@ -136,7 +137,7 @@ public class KategoriServlet extends HttpServlet {
 							path = request.getContextPath() + "/" + barang.getString("image_url");
 						}
 						out.println("<img class=\"gambar_barang\" src=\"" + path + "\" alt=\""+ barang.getString("nama") +"\" height=\"100\" width=\"100\">");
-						out.println("<a href=\""+ request.getContextPath() +"/barang/?id=" + barang.getInt("barang_id") + "\"> " + barang.getString("nama") + "</a>");
+						out.println("<a href=\""+ request.getContextPath() +"/barang?id=" + barang.getInt("barang_id") + "\"> " + barang.getString("nama") + "</a>");
 						out.println("<span class=\"harga\">Rp." + barang.getDouble("harga")  + "</span>");
 						out.println("<form onSubmit=\"return addToShoppingChart(this)\"><input type=\"hidden\" name=\"id_barang\" value=\"" + barang.getInt("barang_id") + "\"><input type=\"text\" name=\"qty\" onKeyUp=\"validateQty(this)\"><input type=\"submit\" value=\"+\" disabled=\"disabled\"></form>");
 						out.println("</div>");

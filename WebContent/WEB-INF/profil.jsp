@@ -15,10 +15,12 @@
 	<header>
         <nav><div class="container">
             <span id="login"><a class="menu_cell hyperlink" href="#loginbox">Login</a></span>
+            
             <form id="wbd_search" class="menu_cell" onSubmit="return testA()">
                 <input type="text" name="search_input" placeholder="Cari disini">
                 <input type="submit" name="submit" value="Cari">
             </form>
+            <a id="keranjang_belanja" class="menu_cell hyperlink" href="keranjang/">Keranjang Belanja <span id="total_keranjang"></span></a>
             </div>
         </nav>
         <div class="container">
@@ -32,16 +34,17 @@
             <img class="background" id='kat5' src="${pageContext.request.contextPath}/img_style/kat5.gif" alt="Kategori 1"/>
 		</div>
         <div class="kategori_group">
-            <a href="${pageContext.request.contextPath}/ketegori/?id=1&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
-            <a href="${pageContext.request.contextPath}/ketegori/?id=2&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
-            <a href="${pageContext.request.contextPath}/ketegori/?id=3&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
-            <a href="${pageContext.request.contextPath}/ketegori/?id=4&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
-            <a href="${pageContext.request.contextPath}/ketegori/?id=5&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
+            <a href="${pageContext.request.contextPath}/kategori?id=1&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
+            <a href="${pageContext.request.contextPath}/kategori?id=2&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
+            <a href="${pageContext.request.contextPath}/kategori?id=3&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
+            <a href="${pageContext.request.contextPath}/kategori?id=4&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
+            <a href="${pageContext.request.contextPath}/kategori?id=5&page=1"><img src="${pageContext.request.contextPath}/img_style/klik.gif" alt="Klik"/></a>
         </div>
     </header>
     <article class="container">
 		<h1>Profil Pelanggan</h1>
-			<div id="identitas">
+			<div id="identitas" onLoad="getMoreIdentity()">
+			    <p><input type="button" name="load" onClick="getMoreIdentity()" value="Lihat profil"></p>
 			</div>
 	</article>
 	<footer class="container">

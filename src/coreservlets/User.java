@@ -19,5 +19,10 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.fullname = fullname;
+		provinsi = "";
+		alamat = "";
+		kabupaten = "";
+		kodepos = "";
+		handphone = "";
 	}
 }

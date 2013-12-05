@@ -72,6 +72,7 @@ public class HomeServlet extends HttpServlet {
 		    	out.println("<input type=\"text\" name=\"search_input\" placeholder=\"Cari disini\">");
 		    	out.println("<input type=\"submit\" name=\"submit\" value=\"Cari\">");
 		    	out.println("</form>");
+		    	out.println("<a id=\"keranjang_belanja\" class=\"menu_cell hyperlink\" href=\"keranjang/\">Keranjang Belanja <span id=\"total_keranjang\"></span></a>");
 		    	out.println("</div>");
 		    	out.println("</nav>");
 		    	out.println("<div class=\"container\">");
@@ -85,11 +86,11 @@ public class HomeServlet extends HttpServlet {
 		    	out.println("<img class=\"background\" id='kat5' src=\"" + request.getContextPath() + "/img_style/kat5.gif\" alt=\"Kategori 1\"/>");
 		    	out.println("</div>");
 		    	out.println("<div class=\"kategori_group\">");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
-		    	out.println("<a href=\"" + request.getContextPath() + "/kategori/?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=1&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=2&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=3&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=4&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
+		    	out.println("<a href=\"" + request.getContextPath() + "/kategori?id=5&page=1\"><img src=\"" + request.getContextPath() + "/img_style/klik.gif\" alt=\"Klik\"/></a>");
 		    	out.println("</div>");
 		    	out.println("</header>");
 				//END OF HEADER
@@ -154,7 +155,7 @@ public class HomeServlet extends HttpServlet {
 		    			
 		    			for (int j = 1; j <= numItem; j++) {
 		    				//TODO up the link for each picture
-		    				out.println("<a class=\"box_barang\" href=\"barang\\?id=" + id.get(j-1) + "\">");
+		    				out.println("<a class=\"box_barang\" href=\"barang?id=" + id.get(j-1) + "\">");
 		    				String path="";
 		    				if (image_url.get(j-1).equals("")){
 		    					path = request.getContextPath() + "/assets/image/default.png";

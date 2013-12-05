@@ -155,7 +155,7 @@ public class AdminServlet extends HttpServlet {
 		    			
 		    			for (int j = 1; j <= id.size(); j++) {
 		    				//TODO up the link for each picture
-		    				out.println("<a class=\"box_barang\" href=\"barang?id=" + id.get(j-1) + "\">");
+		    				out.println("<a class=\"box_barang\" href=\"edit_barang?id=" + id.get(j-1) + "\">");
 		    				String path="";
 		    				if (image_url.get(j-1).equals("")){
 		    					path = request.getContextPath() + "/assets/image/default.png";
@@ -170,6 +170,9 @@ public class AdminServlet extends HttpServlet {
 		    				
 		    			}
 		    	    }
+		    	    out.println("<a class=\"box_barang\" href=\"http://localhost:8080/mvc/tambah_barang?kat=" +i + "\">");
+		    	    out.println("<img class=\"gambar_barang\" src=\"image/plus.png\" alt=\"Default\" height=\"100\" width=\"100\">");
+		    	    out.println("<h3>Tambah</h3></a>");
 		    	    
 		    	}
 		    	out.println("</article>");

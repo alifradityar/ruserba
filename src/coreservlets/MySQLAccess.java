@@ -364,5 +364,47 @@ public void changePassword(int user_id, String kata_sandi) {
 		
 	}
 }
+public void tambahBarang(String nama, String deskripsi, double harga, int kat,
+		String img, int stok) {
+	// TODO Auto-generated method stub
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    resultSet = statement
+	        .executeQuery("SELECT (barang_id + 1) AS num FROM barang_data GROUP BY barang_id DESC LIMIT 0, 1");
+	    resultSet.next();
+	    int id = resultSet.getInt("num");
+	    String str = "INSERT INTO barang_data VALUES (" + id + ", '" + nama + "', " + kat + ", " + harga + ", '" + img + "', '" + deskripsi + "');";
+	    int res = statement.executeUpdate(str);
+	    str = "INSERT INTO barang_stok VALUES (" + id + ", " + stok + ", " + 1 + ");";
+	    res = statement.executeUpdate(str);
+	} catch (Exception e){
+	}
+}
+
+public void updateBarang(int barang_id, String nama, String deskripsi, double harga, int kat,
+		String img, int stok) {
+	// TODO Auto-generated method stub
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    String str = "UPDATE barang_data SET nama = '" + nama + "', kategori_id = " + kat + ", harga = " +harga + ", kodepos = '" + img + "', deskripsi = '" + deskripsi + "' WHERE barang_id = " + barang_id + ";";
+	    int res = statement.executeUpdate(str);
+	} catch (Exception e){
+	}
+}
+
 
 } 

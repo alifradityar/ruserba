@@ -1,0 +1,284 @@
+a {
+    text-decoration: none;
+}
+body {
+    background: #ECECEC;
+    color : black;
+    font-family : Arial, Calibri;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    z-index: 1;
+}
+.container {
+    margin-left:auto;
+	margin-right:auto;
+	max-width: 950px;
+}
+#logo {
+    padding-top: 24px;
+    margin-bottom: -10px;
+}
+#login {
+    line-height: 100%;
+}
+header {
+    background-image: url(http://localhost/tugas_wbd1/assets/img_style/header.gif);
+    background-repeat: no-repeat;
+    background-position: center top;
+    text-align: center;
+}
+header nav {
+    background-color: #CC9900;
+    text-align: left;
+}
+header nav .menu_cell {
+    display: inline-table;
+    line-height: 3em;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+header #kategorilist {
+    background-color: #99FF99;
+    box-shadow: inset 0px 2px 3px #888;
+}
+header #kategorilist a {
+    color: black;
+    display: inline-table;
+    line-height: 2em;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+header #kategorilist a:hover {
+    background-color: #FFCCCC;
+    box-shadow: inset 0px 2px 3px #888;
+}
+article {
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
+header nav a {
+    color: white;
+    font-weight: bold;
+}
+header nav a:hover {
+    background-color: #CC6600;
+    color: white;
+}
+footer {
+    padding-top: 10px;
+}
+#total_keranjang {
+    background-color: red;
+    display: inline-block;
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 1.7em;
+}
+#wbd_search {
+    position: relative;
+    float: right;
+}
+.kategori_group {
+    margin-top: -20px;
+}
+.kategori_group > a {
+    padding-left: 25px;
+    padding-right: 25px;
+    animation: myfirst 5s linear 2s infinite alternate;
+    -webkit-animation: myfirst 5s linear 2s infinite alternate;
+}
+#background_cat .background {
+    animation: myfirst 5s linear 2s infinite alternate;
+    -webkit-animation: myfirst 5s linear 2s infinite alternate;
+}
+
+/* PENDAFTARAN */
+#daftar_kartukredit input, #daftar_kartukredit select, #pendaftaran input {
+    padding: 4px;
+}
+#daftar_kartukredit input[type=text], #pendaftaran input[type=text], #pendaftaran input[type=password] {
+    font-family: monospace;
+}
+#daftar_kartukredit h2, #pendaftaran h2 {
+    padding-left: 16px;
+    font-size: 16px;
+}
+#daftar_kartukredit p, #pendaftaran p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+#daftar_kartukredit label, #pendaftaran label {
+    display: inline-block;
+    padding-right: 8px;
+    text-align: right;
+    width: 200px;
+}
+
+/* PROFIL ATAU IDENTITAS */
+#identitas span {
+    display: inline-block;
+    font-weight: bold;
+    padding-right: 8px;
+    text-align: right;
+    width: 200px;
+}
+
+/* TAMPILAN SETIAP BARANG DI HOME */
+.box_kategori {
+    padding: 12px;
+}
+.box_kategori .box_nama {
+    display: block;
+    line-height: 3em;
+    margin-left: -4px;
+}
+.box_kategori .box_nama h2 {
+    display: inline-block;
+    padding-right: 12px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+.box_barang {
+    color: #444;
+    margin: 4px;
+    border: solid thin #CCCCCC;
+    display: inline-block;
+    max-height: 200px;
+    width: 120px;
+    text-align: center;
+    padding: 10px;
+    vertical-align: top;
+}
+.box_barang:hover {
+    border: solid thin black;
+    color: black;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+}
+.box_barang .gambar_barang {
+    width: 100px;
+    height: 100px;
+}
+.box_barang h3 { /* untuk nama barang */
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.box_barang .harga {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.box_barang > form [name=qty] {
+    width: 30px;
+    margin-right: 10px;
+}
+
+/* TAMPILAN DI HALAMAN KATEGORI */
+.kategori > p {
+    text-align: center;
+    border-bottom: solid black thin;
+}
+.kategori > h1 {
+    margin-left: 12px;
+}
+.kategori > p > a {
+    line-height: 2em;
+}
+.kategori .sorting {
+    padding: 10px;
+    margin-right: 10px;
+}
+.kategori .sorting:hover {
+    text-decoration: underline;
+}
+
+/* TABLE */
+.table {
+    display: table;
+}
+.table > .row {
+    display: table-row;
+    margin-bottom: 10px;
+}
+.table > .row > .column {
+    display: table-cell;
+    padding-bottom: : 4px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-right: 10px;
+}
+
+/* TABLE ON SHOPPING BAG */
+.thead {
+    background-color: #CCC;
+    line-height: 2em;
+    font-weight: bold;
+    max-width: 890px;
+}
+.thead span:first-child {
+    text-align: center;
+    min-width: 100px;
+}
+.thead span:nth-child(2) {
+    min-width: 360px;
+}
+.thead span:nth-child(4), .thead span:nth-child(5) {
+    text-align: center;
+    min-width: 140px;
+}
+.tcontent span {
+    vertical-align: middle;
+}
+.tcontent [name^=qty] {
+    width: 30px;
+}
+
+/* DETAIL BARANG */
+.barang textarea {
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 50px;
+    max-height: 50px;
+}
+.barang [name=qty] {
+    width: 30px;
+}
+
+/* SEARCH RESULT */
+.sresult > .row {
+    height: 150px;
+}
+.sresult h3 {
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+}
+.sresult p {
+    margin-top: 4px;
+}
+.sresult [name=qty] {
+    width: 30px;
+}
+
+@keyframes myfirst
+{
+0%   {margin-left: 0px; margin-right: 0px; }
+25%  {margin-left: 4px; margin-right: 4px; }
+50%  {margin-left: 8px; margin-right: 8px; }
+75%  {margin-left: 4px; margin-right: 4px; }
+100% {margin-left: 0px; margin-right: 0px; }
+}
+@-webkit-keyframes myfirst
+{
+0%   {margin-left: 0px; margin-right: 0px; }
+25%  {margin-left: 4px; margin-right: 4px; }
+50%  {margin-left: 8px; margin-right: 8px; }
+75%  {margin-left: 4px; margin-right: 4px; }
+100% {margin-left: 0px; margin-right: 0px; }
+}

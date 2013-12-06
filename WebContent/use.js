@@ -96,9 +96,12 @@ function loginAfter(data) {
 		// Remove loginbox node
 		var child = document.getElementById('loginbox');
 		if(child != null) child.parentNode.removeChild(child);
-
+		
 		// set keranjang_belanja node to visible with inline-block display
 		document.getElementById('keranjang_belanja').style.display = "inline-block";
+		if(new_data.role == "a"){
+			document.getElementById('admin').style.display = "inline-block";
+		}
 		window.location.href = BASE_URL + "/home";
 	} else if(result.status == "failed") {
 		alert("Data username atau password salah.\nSilahkan coba lagi.");
@@ -119,6 +122,7 @@ function logout() {
 
 	// set keranjang_belanja node to invisible with none display
 	document.getElementById('keranjang_belanja').style.display = "none";
+	document.getElementById('admin').style.display = "none";
 	window.location.href = BASE_URL + "/home";
 }
 function getMoreIdentity() {
@@ -320,6 +324,30 @@ function submitCreditCardAfter(data) {
 	}
 }
 
+function hapusBarang(bId){
+	var r=confirm("Anda yakin ingin menghapus barang ini?");
+	if (r==true)
+	{
+		var bucket = {"todo":"hapusBarang", "data":bId.id.value};
+		sendJSONType(bucket, hapusBarangAfter);
+		return false;
+	}
+	else
+	{
+		
+	} 
+}
+
+function hapusBarangAfter(data) {
+	var result = JSON.parse(data);
+	if(result.status == "success") {
+		window.location.href = BASE_URL;
+	} else {
+		alert("Penghapusan barang gagal");
+	}
+}
+
+
 /* ------------------------------------------------------------------------- */
 /*                                LOCAL STORAGE                              */
 /* ------------------------------------------------------------------------- */
@@ -353,6 +381,12 @@ if(typeof(Storage) !== "undefined") {
 
 			// set node keranjang_belanja to visible with inline-block display
 			document.getElementById('keranjang_belanja').style.display = "inline-block";
+			if (getItemLocalStorage("userData").role == "a"){
+				document.getElementById('admin').style.display = "inline-block";
+			}
+			else {
+				document.getElementById('admin').style.display = "none";
+			}
 		} else {
 			removeLocalStorage("userData");
 			alert("Anda sudah 30 hari tidak pernah menggunakan website ini.\nAnda telah di logout.");
@@ -365,6 +399,7 @@ if(typeof(Storage) !== "undefined") {
 		parent.innerHTML += loginformhtml;
 		// set node keranjang_belanja to invisible with none display
 		document.getElementById('keranjang_belanja').style.display = "none";
+		document.getElementById('admin').style.display = "none";
 	}
 } else {
 	alert("Browser tidak support Local Storage. Mohon ganti ke browser yang mendukung.");

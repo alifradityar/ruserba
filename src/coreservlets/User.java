@@ -12,7 +12,7 @@ public class User {
 	public String kodepos;
 	public String handphone;
 	public KartuKredit creditCard;
-	
+	public String role;
 	public User(int userid,String username,String password,String email,String fullname){
 		this.userid = userid;
 		this.username = username;
@@ -24,5 +24,6 @@ public class User {
 		kabupaten = "";
 		kodepos = "";
 		handphone = "";
+		role = "u";
 	}
 }

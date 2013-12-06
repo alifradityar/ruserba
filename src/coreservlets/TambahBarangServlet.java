@@ -47,7 +47,7 @@ public class TambahBarangServlet extends HttpServlet {
 			String nama = request.getParameter("nama");
 			String text = request.getParameter("deskripsi");
 			System.out.println("tes2");
-			double harga = (double) Integer.parseInt(request.getParameter("harga"));
+			double harga = Double.parseDouble(request.getParameter("harga"));
 			int kat = Integer.parseInt(request.getParameter("kategori"));
 			int stok = Integer.parseInt(request.getParameter("stock"));
 			System.out.println("tes3");

@@ -160,7 +160,8 @@ public class Pagging extends HttpServlet {
 				 String fullname = user.fullname;
 				 String email = user.email;
 				 int userid = user.userid;
-				 jsonObject = new JsonObject().add("status","success").add("data", new JsonArray().add(new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid)));
+				 String role = user.role;
+				 jsonObject = new JsonObject().add("status","success").add("data", new JsonArray().add(new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid).add("role", role)));
 				 jsonObject.writeTo(out);
 			 }
 			 else {
@@ -187,13 +188,15 @@ public class Pagging extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 // This will load the MySQL driver, each DB has its own driver
-		 PrintWriter out = response.getWriter();
+		System.out.println("hello");
+		PrintWriter out = response.getWriter();
 		 String data = request.getParameter("data");
 		 System.out.println(data);
 		 //out.println(data);
 		 response.setContentType("text/html");
 		 JsonObject jsonObject = JsonObject.readFrom(data);
 		 String todo = jsonObject.get("todo").asString();
+		 System.out.println(todo); 
 		 if (todo.equals("pendaftaran")){
 			 JsonArray jsonArray = jsonObject.get("data").asArray();
 			 jsonObject = jsonArray.get(0).asObject();
@@ -263,7 +266,8 @@ public class Pagging extends HttpServlet {
 			 MySQLAccess db = new MySQLAccess();
 				try {
 					int userid = db.daftarUser(username,password,fullname,email);
-					jsonObject = new JsonObject().add("status", "success").add("data",new JsonObject().add("nama_lengkap", fullname).add("email",email).add("user_id", userid));
+					String role = "u";
+					jsonObject = new JsonObject().add("status", "success").add("data",new JsonObject().add("nama_lengkap", fullname).add("email",email).add("user_id", userid).add("role", role));
 					System.out.println(jsonObject.toString());
 					jsonObject.writeTo(out);
 				 }
@@ -381,7 +385,8 @@ public class Pagging extends HttpServlet {
 				 String fullname = user.fullname;
 				 String email = user.email;
 				 int userid = user.userid;
-				 jsonObject = new JsonObject().add("status","success").add("data", new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid));
+				 String role = user.role;
+				 jsonObject = new JsonObject().add("status","success").add("data", new JsonObject().add("nama_lengkap", fullname).add("email", email).add("user_id",userid).add("role", role));
 				 jsonObject.writeTo(out);
 			 }
 			 else {
@@ -392,6 +397,14 @@ public class Pagging extends HttpServlet {
 		 else if (todo.equals("searching")){
 			 String value = jsonObject.get("data").asString();
 			 jsonObject = new JsonObject().add("data","ih nyampe");
+			 jsonObject.writeTo(out);
+		 }
+		 else if (todo.equals("hapusBarang")){
+			 String value = jsonObject.get("data").asString();
+			 int id = Integer.parseInt(value);
+			 MySQLAccess db = new MySQLAccess();
+			 db.hapusBarang(id);
+			 jsonObject = new JsonObject().add("status","success");
 			 jsonObject.writeTo(out);
 		 }
 		

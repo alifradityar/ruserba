@@ -21,6 +21,7 @@
                 <input type="submit" name="submit" value="Cari">
             </form>
             <a id="keranjang_belanja" class="menu_cell hyperlink" href="keranjang/">Keranjang Belanja <span id="total_keranjang"></span></a>
+            <a href="admin" class="menu_cell hyperlink" id="admin">Admin </a>
             </div>
         </nav>
         <div class="container">
@@ -45,7 +46,9 @@
 		<h1>Profil Pelanggan</h1>
 			<div id="identitas" onLoad="getMoreIdentity()">
 			    <p><input type="button" name="load" onClick="getMoreIdentity()" value="Lihat profil"></p>
+			   
 			</div>
+			 <p><a href="pendaftaran/kartu"><input type="button" name="cc" value="Kartu Kredit"></p></a>
 	</article>
 	<footer class="container">
         <div>Ruserba &copy; 2013</div>

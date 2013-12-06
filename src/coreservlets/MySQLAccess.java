@@ -201,6 +201,8 @@ public User getUser(int user_id) {
     	String email = resultSet.getString("email");
     	String fullname = resultSet.getString("nama_lengkap");
     	User user = new User(userid,uname,pass,email,fullname);
+    	user.role = resultSet.getString("ic");
+    	System.out.println("tes1");
     	try {
     		resultSet = statement
     		        .executeQuery("SELECT * FROM pelanggan_addr WHERE user_id = " + userid + " ;");
@@ -210,6 +212,8 @@ public User getUser(int user_id) {
 	    	user.kabupaten = resultSet.getString("kabupaten");
 	    	user.kodepos = resultSet.getString("kodepos");
 	    	user.handphone = resultSet.getString("user_phone");
+	    	
+	    	System.out.println("tes2");
     	}
     	catch (Exception e){
     		
@@ -295,7 +299,10 @@ public User getUser(String username) {
     	String pass = resultSet.getString("kata_sandi");
     	String email = resultSet.getString("email");
     	String fullname = resultSet.getString("nama_lengkap");
+    	
     	User user = new User(userid,uname,pass,email,fullname);
+    	user.role = resultSet.getString("ic");
+    	System.out.println("tes1");
     	try {
     		resultSet = statement
     		        .executeQuery("SELECT * FROM pelanggan_addr WHERE user_id = " + userid + " ;");
@@ -305,9 +312,11 @@ public User getUser(String username) {
 	    	user.kabupaten = resultSet.getString("kabupaten");
 	    	user.kodepos = resultSet.getString("kodepos");
 	    	user.handphone = resultSet.getString("user_phone");
+	    	
+	    	System.out.println("tes2");
     	}
     	catch (Exception e){
-    		
+    		System.out.println("tes3");
     	}
 	    return user;
 	} catch (Exception e){
@@ -400,11 +409,69 @@ public void updateBarang(int barang_id, String nama, String deskripsi, double ha
 	    // Statements allow to issue SQL queries to the database
 	    statement = connect.createStatement();
 	    // Result set get the result of the SQL query
-	    String str = "UPDATE barang_data SET nama = '" + nama + "', kategori_id = " + kat + ", harga = " +harga + ", kodepos = '" + img + "', deskripsi = '" + deskripsi + "' WHERE barang_id = " + barang_id + ";";
+	    String str = "UPDATE barang_data SET nama = '" + nama + "', kategori_id = " + kat + ", harga = " +harga + ", image_url = '" + img + "', deskripsi = '" + deskripsi + "' WHERE barang_id = " + barang_id + ";";
 	    int res = statement.executeUpdate(str);
+	    str = "UPDATE barang_stok SET stok = " + stok + ", satuan = " + 1 + " WHERE barang_id = " + barang_id + ";";
+	    res = statement.executeUpdate(str);
 	} catch (Exception e){
 	}
 }
+public Barang getBarang(int id) {
+	// TODO Auto-generated method stub
+	Barang barang = new Barang();
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    resultSet = statement
+	        .executeQuery("SELECT * FROM barang_data natural join barang_stok WHERE barang_id = " + id + " ;");
+	    boolean valid = false;
+	    
+	    resultSet.next();
+		int barangid = resultSet.getInt("barang_id");
+		String nama = resultSet.getString("nama");
+		int kategori_id = resultSet.getInt("kategori_id");
+		Double harga = resultSet.getDouble("harga");
+		String image_url = resultSet.getString("image_url");
+		String deskripsi = resultSet.getString("deskripsi");
+		int stock = resultSet.getInt("stok");
+		barang.id = barangid;
+		barang.nama = nama;
+		barang.kategori_id = kategori_id;
+		barang.harga = harga;
+		barang.image_url = image_url;
+		barang.deskripsi = deskripsi;
+		barang.stock = stock;
+		return barang;
+	}catch (Exception e){
+		return null;
+	}
+}
+public void hapusBarang(int id) {
+	// TODO Auto-generated method stub
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	    // Setup the connection with the DB
+	    connect = DriverManager
+	        .getConnection("jdbc:mysql://localhost/tugas_wbd1?"
+	            + "user=root&password=");
+	    // Statements allow to issue SQL queries to the database
+	    statement = connect.createStatement();
+	    // Result set get the result of the SQL query
+	    int res = statement
+		        .executeUpdate("DELETE FROM barang_stok WHERE barang_id = " + id + " ;");
+	    res = statement
+	        .executeUpdate("DELETE FROM barang_data WHERE barang_id = " + id + " ;");
+	    
+	   
+	}catch (Exception e){
+	}
+} 
 
 
 } 

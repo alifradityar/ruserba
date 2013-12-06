@@ -22,6 +22,7 @@
                 <input type="submit" name="submit" value="Cari">
             </form>
             <a id="keranjang_belanja" class="menu_cell hyperlink" href="keranjang/">Keranjang Belanja <span id="total_keranjang"></span></a>
+            <a href="admin" class="menu_cell hyperlink" id="admin">Admin </a>
             </div>
         </nav>
         <div class="container">
@@ -60,7 +61,7 @@
 						</c:forEach>
 					</select>
 			    </p>
-			    <p><label>&nbsp;</label>&nbsp;<input type="submit" name="submit" value="Daftarkan Kartu Kredit" disabled="disabled"> atau <a href="<?php print HOME_URL; ?>">Cukup lewat saja</a></p>
+			    <p><label>&nbsp;</label>&nbsp;<input type="submit" name="submit" value="Daftarkan Kartu Kredit" disabled="disabled"> atau <a href="home">Cukup lewat saja</a></p>
 			</form>
 	</article>
 	<footer class="container">

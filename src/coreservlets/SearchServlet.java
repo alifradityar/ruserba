@@ -66,6 +66,8 @@ public class SearchServlet extends HttpServlet {
 		    	out.println("<input type=\"text\" name=\"search_input\" placeholder=\"Cari disini\">");
 		    	out.println("<input type=\"submit\" name=\"submit\" value=\"Cari\">");
 		    	out.println("</form>");
+		    	out.println("<a id=\"keranjang_belanja\" class=\"menu_cell hyperlink\" href=\"keranjang/\">Keranjang Belanja <span id=\"total_keranjang\"></span></a>");
+		    	out.println("<a id=\"admin\" class=\"menu_cell hyperlink\" href=\"admin\">Admin </a>");
 		    	out.println("</div>");
 		    	out.println("</nav>");
 		    	out.println("<div class=\"container\">");

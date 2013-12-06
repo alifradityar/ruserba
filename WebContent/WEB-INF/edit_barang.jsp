@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -20,6 +21,7 @@
                 <input type="submit" name="submit" value="Cari">
             </form>
             <a id="keranjang_belanja" class="menu_cell hyperlink" href="keranjang/">Keranjang Belanja <span id="total_keranjang"></span></a>
+            <a href="admin" class="menu_cell hyperlink" id="admin">Admin </a>
             </div>
         </nav>
         <div class="container">
@@ -41,13 +43,14 @@
         </div>
     </header>
     <article class="container">
-		<h1>Tambah Barang Baru</h1>
-		<form id="pendaftaran" method="post" action="tambah_barang" enctype="multipart/form-data">
+		<h1>Edit Barang</h1>
+		<form id="pendaftaran" method="post" action="edit_barang" enctype="multipart/form-data">
 		    <h2>Umum</h2>
-		    <p><label>Nama</label>: <input type="text" name="nama" size="40"></p>
-		    <p><label>Deskripsi</label>: <input type="text" name="deskripsi" size="40"></p>
-		    <p><label>Harga</label>: <input type="text" name="harga" size="40"></p>
-		    <p><label>Stock</label>: <input type="text" name="stock " size="40"></p>
+		    <input hidden type="text" name="id" size="40" value="${id}" >
+		    <p><label>Nama</label>: <input type="text" name="nama" size="40" value="${nama}"></p>
+		    <p><label>Deskripsi</label>: <input type="text" name="deskripsi" size="40" value="${deskripsi}"></p>
+		    <p><label>Harga</label>: <input type="text" name="harga" size="40" value="${harga}"></p>
+		    <p><label>Stock</label>: <input type="text" name="stock " size="40" value="${stock}"></p>
 		    <p><label>Kategori</label>: 
 		    <select name="kategori">
 			  <option value=1>Makanan & Minuman</option>
@@ -58,7 +61,11 @@
 			</select> </p>
 		    <h2>Media</h2>
 		    <p><label>Gambar</label>: <input type="file" name="nama_lengkap" size="40"></p>
-		    <p><label>&nbsp;</label>&nbsp; <input type="submit" name="tambah_submit" value="Tambahkan"></p>
+		    <p><label>&nbsp;</label>&nbsp; <input type="submit" name="tambah_submit" value="Simpan"></p>
+		</form>
+		<form onsubmit="return hapusBarang(this)">
+		 	<input hidden type="text" name="id" size="40" value="${id}" >
+			<p><label>&nbsp;</label>&nbsp; <input type="submit" name="delete" value="Hapus" ></p>
 		</form>
 	</article>
 	<footer class="container">
